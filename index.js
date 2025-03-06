@@ -28,12 +28,18 @@ async function run() {
 
     const movieCollection = client.db("moviePortalDB").collection('movies');
 
+    app.get('/movies', async(req, res) => {
+        const cursor = movieCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
 
     app.post('/movies', async(req, res)=> {
         const newMovie = req.body;
         const result = await movieCollection.insertOne(newMovie);
         res.send(result)
     })
+
 
 
     // Send a ping to confirm a successful connection
